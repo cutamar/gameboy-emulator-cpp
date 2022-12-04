@@ -7,4 +7,6 @@ set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
 project(GameboyEmulator)
 
-add_executable(GameboyEmulator src/main.cpp)
+file(GLOB SOURCES "src/*.cpp")
+
+add_executable(GameboyEmulator ${SOURCES})
