@@ -20,7 +20,7 @@ void MMU::Reset() {
     ram_offs = 0;
 }
 
-int8_t MMU::ReadByte(int8_t address) {
+uint8_t MMU::ReadByte(int8_t address) {
     switch (address & 0xF000) {
         case 0x0000:
             if (in_bios && address < 0x0100) {
@@ -112,11 +112,11 @@ int8_t MMU::ReadByte(int8_t address) {
     return 0;
 }
 
-int16_t MMU::ReadWord(int8_t address) {
+uint16_t MMU::ReadWord(int8_t address) {
     return ReadByte(address) + (ReadByte(address+1) << 8);
 }
 
-void MMU::WriteByte(int8_t address, int8_t data) {
+void MMU::WriteByte(int8_t address, uint8_t data) {
     switch (address & 0xF000) {
         case 0x0000:
         case 0x1000:
@@ -226,7 +226,7 @@ void MMU::WriteByte(int8_t address, int8_t data) {
     }
 }
 
-void MMU::WriteWord(int8_t address, int16_t data) {
+void MMU::WriteWord(int8_t address, uint16_t data) {
     WriteByte(address, data & 255);
     WriteByte(address + 1, data >> 8);
 }

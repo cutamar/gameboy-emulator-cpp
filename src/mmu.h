@@ -12,13 +12,13 @@ class GPU;
 class MMU {
     public:
         MMU(const CPU& cpu, GPU& gpu);
-        int8_t ReadByte(int8_t address);
-        int16_t ReadWord(int8_t address);
-        void WriteByte(int8_t address, int8_t data);
-        void WriteWord(int8_t address, int16_t data);
+        uint8_t ReadByte(int8_t address);
+        uint16_t ReadWord(int8_t address);
+        void WriteByte(int8_t address, uint8_t data);
+        void WriteWord(int8_t address, uint16_t data);
         void Load(std::string path);
         void Reset();
-        int8_t cartridge_type;
+        uint8_t cartridge_type;
         uint8_t interrupt_e, interrupt_f;
     private:
         const CPU& cpu;
