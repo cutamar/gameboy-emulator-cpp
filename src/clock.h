@@ -7,7 +7,7 @@ class Clock {
     public:
         Clock();
         // m clock and t clock
-        int16_t m, t;
+        uint16_t m, t;
 };
 
 #endif

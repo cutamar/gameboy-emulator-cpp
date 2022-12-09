@@ -7,9 +7,15 @@ set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
 project(GameboyEmulator)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS} src)
+
 file(GLOB SOURCES "src/*.cpp")
 
 add_executable(GameboyEmulator ${SOURCES})
+target_link_libraries(GameboyEmulator ${SDL2_LIBRARIES})
 
 enable_testing()
 

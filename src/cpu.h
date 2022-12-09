@@ -14,10 +14,10 @@ class MMU;
 class CPU {
     public:
         CPU();
-        void ExecuteInstruction(uint16_t op_code);
-        void ExecuteCBInstruction(uint16_t op_code);
-        int16_t GetNextPC();
-        int16_t GetCurrentPC() const;
+        void ExecuteInstruction(uint8_t op_code);
+        void ExecuteCBInstruction(uint8_t op_code);
+        uint8_t GetNextPC();
+        uint8_t GetCurrentPC() const;
         void SetMMU(MMU& mmu);
         Registers registers;
 

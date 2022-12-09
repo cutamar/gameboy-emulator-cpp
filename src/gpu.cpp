@@ -1,7 +1,16 @@
 #include <algorithm>
 #include "gpu.h"
 
-GPU::GPU() : cur_line{0}, cur_scan{0}, line_mode{0}, mode_clocks{0}, y_scrl{0}, x_scrl{0}, raster{0}, ints{0}, lcd_on{0}, bg_on{0}, obj_on{0}, win_on{0}, obj_size{0}, bg_tilebase{0x0000}, bg_mapbase{0x1800}, win_tilebase{0x1800} {}
+GPU::GPU() : cur_line{0}, cur_scan{0}, line_mode{2}, mode_clocks{0}, y_scrl{0}, x_scrl{0}, raster{0}, ints{0}, lcd_on{0}, bg_on{0}, obj_on{0}, win_on{0}, obj_size{0}, bg_tilebase{0x0000}, bg_mapbase{0x1800}, win_tilebase{0x1800} {
+    vram = std::vector<uint8_t>(8192, 0);
+    oam = std::vector<uint8_t>(160, 0);
+    palette_bg = std::vector<uint8_t>(4, 255);
+    palette_obj0 = std::vector<uint8_t>(4, 255);
+    palette_obj1 = std::vector<uint8_t>(4, 255);
+    tilemap = std::vector<std::vector<std::vector<uint8_t>>>(512, std::vector<std::vector<uint8_t>>(8, std::vector<uint8_t>(8, 0)));
+    reg = std::vector<uint8_t>(65536, 0);
+    scanrow = std::vector<uint8_t>(160, 0);
+}
 
 void GPU::SetCPU(CPU& cpu) {
     this->cpu = &cpu;
@@ -18,6 +27,7 @@ void GPU::Reset() {
     palette_obj0 = std::vector<uint8_t>(4, 255);
     palette_obj1 = std::vector<uint8_t>(4, 255);
     tilemap = std::vector<std::vector<std::vector<uint8_t>>>(512, std::vector<std::vector<uint8_t>>(8, std::vector<uint8_t>(8, 0)));
+    reg = std::vector<uint8_t>(65536, 0);
     // TODO: handle gui
     cur_line = 0;
     cur_scan = 0;
@@ -47,16 +57,18 @@ void GPU::CheckLine() {
     switch (line_mode)
     {
     case 0:
-        if (mode_clocks >= 51 && cur_line == 143) {
-            line_mode = 1;
-            // TODO handle gui
-            mmu->interrupt_f |= 1;
-        } else if (mode_clocks >= 51) {
-            line_mode = 2;
+        if (mode_clocks >= 51) {
+            if (cur_line == 143) {
+                line_mode = 1;
+                // TODO handle gui
+                mmu->interrupt_f |= 1;
+            } else {
+                line_mode = 2;
+            }
+            cur_line++;
+            cur_scan += 640;
+            mode_clocks = 0;
         }
-        cur_line++;
-        cur_scan += 640;
-        mode_clocks = 0;
         break;
     case 1:
         if (mode_clocks >= 114) {
@@ -169,7 +181,7 @@ void GPU::CheckLine() {
     }
 }
 
-void GPU::UpdateTile(uint8_t address, uint8_t data) {
+void GPU::UpdateTile(uint16_t address, uint8_t data) {
     auto s_address = address;
     if (address & 1) {
         s_address--;
@@ -184,7 +196,7 @@ void GPU::UpdateTile(uint8_t address, uint8_t data) {
     }
 }
 
-void GPU::UpdateOAM(uint8_t address, uint8_t data) {
+void GPU::UpdateOAM(uint16_t address, uint8_t data) {
     address -= 0xFE00;
     auto obj = address >> 2;
     if (obj < 40) {
@@ -215,8 +227,8 @@ void GPU::UpdateOAM(uint8_t address, uint8_t data) {
     });
 }
 
-uint8_t GPU::ReadByte(uint8_t address) const {
-    auto g_address = address - 0xFF40;
+uint8_t GPU::ReadByte(uint16_t address) const {
+    uint16_t g_address = address - 0xFF40;
     switch (g_address)
     {
     case 0:
@@ -248,8 +260,8 @@ uint8_t GPU::ReadByte(uint8_t address) const {
     }
 }
 
-void GPU::WriteByte(uint8_t address, uint8_t data) {
-    auto g_address = address - 0xFF40;
+void GPU::WriteByte(uint16_t address, uint8_t data) {
+    uint16_t g_address = address - 0xFF40;
     reg[g_address] = data;
     switch (g_address)
     {

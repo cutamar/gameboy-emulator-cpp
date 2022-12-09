@@ -9,9 +9,11 @@ int main() {
     MMU mmu{cpu, gpu};
     cpu.SetMMU(mmu);
     gpu.SetCPU(cpu);
+    gpu.SetMMU(mmu);
     while (true) {
-        auto op = mmu.ReadByte(cpu.GetNextPC());
+        uint8_t op = mmu.ReadByte(cpu.GetNextPC());
         cpu.ExecuteInstruction(op);
+        gpu.CheckLine();
     }
     return 0;
 }

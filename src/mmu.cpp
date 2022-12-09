@@ -2,7 +2,11 @@
 #include "mmu.h"
 #include "gpu.h"
 
-MMU::MMU(const CPU& cpu, GPU& gpu) : cpu{cpu}, gpu{gpu}, in_bios{true}, cartridge_type{0}, interrupt_e{0}, interrupt_f{0}, rom_offs{0x4000}, ram_offs{0}, rom_bank{0}, ram_bank{0}, ram_on{0}, mode{0} {}
+MMU::MMU(const CPU& cpu, GPU& gpu) : cpu{cpu}, gpu{gpu}, in_bios{true}, cartridge_type{0}, interrupt_e{0}, interrupt_f{0}, rom_offs{0x4000}, ram_offs{0}, rom_bank{0}, ram_bank{0}, ram_on{0}, mode{0} {
+    wram = std::vector<uint8_t>(8192, 0);
+    eram = std::vector<uint8_t>(32768, 0);
+    zram = std::vector<uint8_t>(127, 0);
+}
 
 void MMU::Reset() {
     wram = std::vector<uint8_t>(8192, 0);
@@ -20,7 +24,7 @@ void MMU::Reset() {
     ram_offs = 0;
 }
 
-uint8_t MMU::ReadByte(int8_t address) {
+uint8_t MMU::ReadByte(uint16_t address) {
     switch (address & 0xF000) {
         case 0x0000:
             if (in_bios && address < 0x0100) {
@@ -112,11 +116,11 @@ uint8_t MMU::ReadByte(int8_t address) {
     return 0;
 }
 
-uint16_t MMU::ReadWord(int8_t address) {
+uint16_t MMU::ReadWord(uint16_t address) {
     return ReadByte(address) + (ReadByte(address+1) << 8);
 }
 
-void MMU::WriteByte(int8_t address, uint8_t data) {
+void MMU::WriteByte(uint16_t address, uint8_t data) {
     switch (address & 0xF000) {
         case 0x0000:
         case 0x1000:
@@ -226,7 +230,7 @@ void MMU::WriteByte(int8_t address, uint8_t data) {
     }
 }
 
-void MMU::WriteWord(int8_t address, uint16_t data) {
+void MMU::WriteWord(uint16_t address, uint16_t data) {
     WriteByte(address, data & 255);
     WriteByte(address + 1, data >> 8);
 }
