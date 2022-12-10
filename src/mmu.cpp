@@ -24,6 +24,10 @@ void MMU::Reset() {
     ram_offs = 0;
 }
 
+void MMU::SetTimer(Timer& timer) {
+    this->timer = &timer;
+}
+
 uint8_t MMU::ReadByte(uint16_t address) {
     switch (address & 0xF000) {
         case 0x0000:
@@ -92,8 +96,7 @@ uint8_t MMU::ReadByte(uint16_t address) {
                                     case 5:
                                     case 6:
                                     case 7:
-                                        // TODO TIMER.rb(addr);
-                                        return 0;
+                                        return timer->ReadByte(address);
                                     case 15:
                                         return interrupt_f;
                                     default:
@@ -207,7 +210,7 @@ void MMU::WriteByte(uint16_t address, uint8_t data) {
                                     case 0x5:
                                     case 0x6:
                                     case 0x7:
-                                        // TODO TIMER.wb(addr, val);
+                                        timer->WriteByte(address, data);
                                         break;
                                     case 15:
                                         interrupt_f = data;

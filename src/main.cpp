@@ -2,6 +2,7 @@
 #include "cpu.h"
 #include "mmu.h"
 #include "gpu.h"
+#include "timer.h"
 #include "renderer.h"
 
 int main() {
@@ -9,6 +10,7 @@ int main() {
     CPU cpu{};
     GPU gpu{};
     MMU mmu{cpu, gpu};
+    Timer timer{cpu, mmu};
     cpu.SetMMU(mmu);
     gpu.SetCPU(cpu);
     gpu.SetMMU(mmu);

@@ -1580,6 +1580,10 @@ void CPU::UpdateClock()
 {
     clock.m += registers.m;
     clock.t += registers.t;
+
+    // TODO TIMER.inc()
+
+    // TODO TIMER.inc()
 }
 
 void CPU::Reset()
