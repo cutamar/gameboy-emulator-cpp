@@ -34,9 +34,6 @@ list(FILTER SOURCES EXCLUDE REGEX ".*main\.cpp$")
 list(FILTER SOURCES EXCLUDE REGEX ".*renderer\.cpp$")
 
 add_executable(EmulatorTest test/test_emulator.cpp ${SOURCES})
-
-target_link_libraries(EmulatorTest
- PRIVATE
-  GTest::GTest)
+target_link_libraries(EmulatorTest PRIVATE GTest::GTest ${SDL2_LIBRARIES})
 
 add_test(emulator_gtests EmulatorTest)

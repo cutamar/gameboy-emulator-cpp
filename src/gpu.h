@@ -5,6 +5,8 @@
 #include <vector>
 #include "cpu.h"
 #include "mmu.h"
+#include "renderer.h"
+#include "SDL.h"
 
 struct GPUObjectData {
     int8_t x;
@@ -28,6 +30,7 @@ class GPU {
         void CheckLine();
         void SetCPU(CPU& cpu);
         void SetMMU(MMU& mmu);
+        void SetRenderer(Renderer& renderer);
         std::vector<uint8_t> vram;
         std::vector<uint8_t> oam;
         std::vector<uint8_t> reg;
@@ -36,6 +39,8 @@ class GPU {
     private:
         CPU* cpu;
         MMU* mmu;
+        Renderer* renderer;
+        std::vector<uint8_t> screen_data;
         std::vector<std::vector<std::vector<uint8_t>>> tilemap;
         std::vector<GPUObjectData> obj_data_sorted;
         std::vector<uint8_t> palette_bg;
@@ -46,6 +51,7 @@ class GPU {
         uint8_t lcd_on, bg_on, obj_on, win_on;
         uint8_t obj_size;
         uint16_t bg_tilebase, bg_mapbase, win_tilebase;
+        void DrawPixels();
 };
 
 #endif

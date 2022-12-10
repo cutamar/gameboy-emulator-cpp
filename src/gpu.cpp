@@ -10,6 +10,7 @@ GPU::GPU() : cur_line{0}, cur_scan{0}, line_mode{2}, mode_clocks{0}, y_scrl{0}, 
     tilemap = std::vector<std::vector<std::vector<uint8_t>>>(512, std::vector<std::vector<uint8_t>>(8, std::vector<uint8_t>(8, 0)));
     reg = std::vector<uint8_t>(65536, 0);
     scanrow = std::vector<uint8_t>(160, 0);
+    screen_data = std::vector<uint8_t>(160*144*4, 255);
 }
 
 void GPU::SetCPU(CPU& cpu) {
@@ -20,6 +21,11 @@ void GPU::SetMMU(MMU& mmu) {
     this->mmu = &mmu;
 }
 
+void GPU::SetRenderer(Renderer& renderer) {
+    this->renderer = &renderer;
+    DrawPixels();
+}
+
 void GPU::Reset() {
     vram = std::vector<uint8_t>(8192, 0);
     oam = std::vector<uint8_t>(160, 0);
@@ -28,7 +34,8 @@ void GPU::Reset() {
     palette_obj1 = std::vector<uint8_t>(4, 255);
     tilemap = std::vector<std::vector<std::vector<uint8_t>>>(512, std::vector<std::vector<uint8_t>>(8, std::vector<uint8_t>(8, 0)));
     reg = std::vector<uint8_t>(65536, 0);
-    // TODO: handle gui
+    screen_data = std::vector<uint8_t>(160*144*4, 255);
+    DrawPixels();
     cur_line = 0;
     cur_scan = 0;
     line_mode = 2;
@@ -52,6 +59,22 @@ void GPU::Reset() {
     win_tilebase = 0x1800;
 }
 
+void GPU::DrawPixels()
+{
+    // for tests, as we are not using a renderer
+    if (renderer == nullptr) return;
+    for (int x = 0; x < 160; ++x)
+    {
+        for (int y = 0; y < 144; ++y) {
+            int base_index = (x + y * 160) * 4;
+            int alpha = screen_data[base_index + 3];
+            SDL_SetRenderDrawColor(renderer->sdl_renderer, alpha, alpha, alpha, alpha);
+            SDL_RenderDrawPoint(renderer->sdl_renderer, x, y);
+        }
+    }
+    SDL_RenderPresent(renderer->sdl_renderer);
+}
+
 void GPU::CheckLine() {
     mode_clocks += cpu->registers.m;
     switch (line_mode)
@@ -60,7 +83,7 @@ void GPU::CheckLine() {
         if (mode_clocks >= 51) {
             if (cur_line == 143) {
                 line_mode = 1;
-                // TODO handle gui
+                DrawPixels();
                 mmu->interrupt_f |= 1;
             } else {
                 line_mode = 2;
@@ -105,7 +128,7 @@ void GPU::CheckLine() {
                     auto tile_row = tilemap[tile][y];
                     do {
                         scanrow[160 - x] = tile_row[x];
-                        // TODO handle gui
+                        screen_data[line_base+3] = palette_bg[tile_row[x]];
                         x++;
                         if (x == 8) {
                             t = (t + 1) & 31;
@@ -120,7 +143,7 @@ void GPU::CheckLine() {
                     auto tile_row = tilemap[vram[map_base+t]][y];
                     do {
                         scanrow[160-x] = tile_row[x];
-                        // TODO handle gui
+                        screen_data[line_base+3] = palette_bg[tile_row[x]];
                         x++;
                         if (x==8) {
                             t = (t + 1) & 31;
@@ -155,7 +178,7 @@ void GPU::CheckLine() {
                                 for (x=0; x < 8; ++x) {
                                     if (obj.x + x >= 0 && obj.x + x < 160) {
                                         if (tile_row[7-x] && (obj.prio || scanrow[x])) {
-                                            // TODO handle gui
+                                            screen_data[line_base+3] = pal[tile_row[7-x]];
                                         }
                                     }
                                     line_base += 4;
@@ -164,7 +187,7 @@ void GPU::CheckLine() {
                                 for (x=0; x < 8; ++x) {
                                     if (obj.x + x >= 0 && obj.x + x < 160) {
                                         if (tile_row[x] && (obj.prio || scanrow[x])) {
-                                            // TODO handle gui
+                                            screen_data[line_base+3] = pal[tile_row[x]];
                                         }
                                     }
                                     line_base += 4;
