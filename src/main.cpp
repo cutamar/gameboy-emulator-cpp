@@ -1,4 +1,6 @@
 #include <iostream>
+#include <chrono>
+
 #include "cpu.h"
 #include "mmu.h"
 #include "gpu.h"
@@ -17,6 +19,7 @@ int main() {
     gpu.SetRenderer(renderer);
     mmu.Load("../roms/ttt.gb");
     while (true) {
+        auto start = std::chrono::system_clock::now();
         if (cpu.halt) {
             cpu.registers.m = 1;
         } else {
@@ -49,6 +52,16 @@ int main() {
         }
         gpu.CheckLine();
         timer.Inc();
+
+        // makes sure we keep the framerate
+        bool sleep = true;
+        while(sleep)
+        {
+            auto now = std::chrono::system_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(now - start);
+            if ( elapsed.count() > 1 )
+                sleep = false;
+        }
     }
     return 0;
 }

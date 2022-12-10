@@ -34,8 +34,9 @@ uint8_t MMU::ReadByte(uint16_t address) {
             if (in_bios && address < 0x0100) {
                 return bios[address];
             }
-            if (in_bios && cpu.GetCurrentPC() == 0x0100) {
+            else if (in_bios && cpu.GetCurrentPC() == 0x0100) {
                 in_bios = false;
+                return 0;
             }
             return rom[address];
         case 0x1000:
