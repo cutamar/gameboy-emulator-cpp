@@ -31,6 +31,7 @@ add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest_main)
 
 list(FILTER SOURCES EXCLUDE REGEX ".*main\.cpp$")
+list(FILTER SOURCES EXCLUDE REGEX ".*renderer\.cpp$")
 
 add_executable(EmulatorTest test/test_emulator.cpp ${SOURCES})
 

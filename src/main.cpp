@@ -2,8 +2,15 @@
 #include "cpu.h"
 #include "mmu.h"
 #include "gpu.h"
+#include "renderer.h"
 
 int main() {
+    constexpr std::size_t kScreenWidth{640};
+    constexpr std::size_t kScreenHeight{640};
+    constexpr std::size_t kGridWidth{32};
+    constexpr std::size_t kGridHeight{32};
+
+    Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
     CPU cpu{};
     GPU gpu{};
     MMU mmu{cpu, gpu};
