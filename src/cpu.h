@@ -18,17 +18,23 @@ class CPU {
         void ExecuteCBInstruction(uint8_t op_code);
         uint8_t GetNextPC();
         uint8_t GetCurrentPC() const;
+        void UpdateClock();
         void SetMMU(MMU& mmu);
         Registers registers;
+        bool halt;
+        bool stop;
+
+        void RST40();
+        void RST48();
+        void RST50();
+        void RST58();
+        void RST60();
 
     private:
         TempRegisters temp_registers;
         Clock clock;
         MMU* mmu;
-        bool halt;
-        bool stop;
         // methods
-        void UpdateClock();
         void Reset();
 
         template<typename T>
@@ -542,11 +548,6 @@ class CPU {
         void RST28();
         void RST30();
         void RST38();
-        void RST40();
-        void RST48();
-        void RST50();
-        void RST58();
-        void RST60();
         void NOP();
         void HALT();
         void DI();

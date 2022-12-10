@@ -780,7 +780,6 @@ void CPU::ExecuteInstruction(uint8_t op_code)
     default:
         throw std::runtime_error("OpCode: '" + ToHexString(op_code) + "'\n");
     }
-    UpdateClock();
 }
 
 void CPU::ExecuteCBInstruction(uint8_t op_code)
@@ -1558,7 +1557,6 @@ void CPU::ExecuteCBInstruction(uint8_t op_code)
     default:
         throw std::runtime_error("CB OpCode: '" + ToHexString(op_code) + "'\n");
     }
-    UpdateClock();
 }
 
 uint8_t CPU::GetNextPC()
@@ -1580,10 +1578,6 @@ void CPU::UpdateClock()
 {
     clock.m += registers.m;
     clock.t += registers.t;
-
-    // TODO TIMER.inc()
-
-    // TODO TIMER.inc()
 }
 
 void CPU::Reset()
