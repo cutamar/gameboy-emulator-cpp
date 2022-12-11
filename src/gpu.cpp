@@ -11,6 +11,9 @@ GPU::GPU() : cur_line{0}, cur_scan{0}, line_mode{2}, mode_clocks{0}, y_scrl{0}, 
     reg = std::vector<uint8_t>(65536, 0);
     scanrow = std::vector<uint8_t>(160, 0);
     screen_data = std::vector<uint8_t>(160*144*4, 255);
+    for (uint8_t i = 0; i < 40; ++i) {
+        obj_data.emplace_back(GPUObjectData{-8, -16, 0, 0, 0, 0, 0, i});
+    }
 }
 
 void GPU::SetCPU(CPU& cpu) {

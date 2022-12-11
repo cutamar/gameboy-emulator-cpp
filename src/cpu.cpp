@@ -1559,12 +1559,12 @@ void CPU::ExecuteCBInstruction(uint8_t op_code)
     }
 }
 
-uint8_t CPU::GetNextPC()
+uint16_t CPU::GetNextPC()
 {
     return registers.pc++;
 }
 
-uint8_t CPU::GetCurrentPC() const
+uint16_t CPU::GetCurrentPC() const
 {
     return registers.pc;
 }
@@ -2107,7 +2107,7 @@ void CPU::LDIOCA()
 
 void CPU::LDHLSPn()
 {
-    auto i = mmu->ReadByte(registers.pc);
+    int8_t i = mmu->ReadByte(registers.pc);
     if (i > 127)
         i = -((~i + 1) & 255);
     registers.pc++;
@@ -2329,7 +2329,7 @@ void CPU::ADDHLSP()
 }
 void CPU::ADDSPn()
 {
-    auto i = mmu->ReadByte(registers.pc);
+    int8_t i = mmu->ReadByte(registers.pc);
     if (i > 127)
         i = -((~i + 1) & 255);
     registers.pc++;
@@ -5084,7 +5084,7 @@ void CPU::JPCnn()
 
 void CPU::JRn()
 {
-    auto i = mmu->ReadByte(registers.pc);
+    int8_t i = mmu->ReadByte(registers.pc);
     if (i > 127)
         i = -((~i + 1) & 255);
     registers.pc++;
@@ -5094,7 +5094,7 @@ void CPU::JRn()
 }
 void CPU::JRNZn()
 {
-    auto i = mmu->ReadByte(registers.pc);
+    int8_t i = mmu->ReadByte(registers.pc);
     if (i > 127)
         i = -((~i + 1) & 255);
     registers.pc++;
@@ -5107,7 +5107,7 @@ void CPU::JRNZn()
 }
 void CPU::JRZn()
 {
-    auto i = mmu->ReadByte(registers.pc);
+    int8_t i = mmu->ReadByte(registers.pc);
     if (i > 127)
         i = -((~i + 1) & 255);
     registers.pc++;
@@ -5120,7 +5120,7 @@ void CPU::JRZn()
 }
 void CPU::JRNCn()
 {
-    auto i = mmu->ReadByte(registers.pc);
+    int8_t i = mmu->ReadByte(registers.pc);
     if (i > 127)
         i = -((~i + 1) & 255);
     registers.pc++;
@@ -5133,7 +5133,7 @@ void CPU::JRNCn()
 }
 void CPU::JRCn()
 {
-    auto i = mmu->ReadByte(registers.pc);
+    int8_t i = mmu->ReadByte(registers.pc);
     if (i > 127)
         i = -((~i + 1) & 255);
     registers.pc++;
@@ -5147,7 +5147,7 @@ void CPU::JRCn()
 
 void CPU::DJNZn()
 {
-    auto i = mmu->ReadByte(registers.pc);
+    int8_t i = mmu->ReadByte(registers.pc);
     if (i > 127)
         i = -((~i + 1) & 255);
     registers.pc++;
@@ -5436,6 +5436,6 @@ void CPU::XX()
 {
     // undefined map entry
     auto op_code = registers.pc - 1;
-    std::cout << "OpCode: '" << ToHexString(op_code) << "'" << std::endl;
+    //std::cout << "OpCode: '" << ToHexString(op_code) << "'" << std::endl;
     stop = true;
 }

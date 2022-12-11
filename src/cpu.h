@@ -16,8 +16,8 @@ class CPU {
         CPU();
         void ExecuteInstruction(uint8_t op_code);
         void ExecuteCBInstruction(uint8_t op_code);
-        uint8_t GetNextPC();
-        uint8_t GetCurrentPC() const;
+        uint16_t GetNextPC();
+        uint16_t GetCurrentPC() const;
         void UpdateClock();
         void SetMMU(MMU& mmu);
         Registers registers;
