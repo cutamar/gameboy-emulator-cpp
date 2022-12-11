@@ -1900,3 +1900,135 @@ TEST_F(GameboyEmulatorTest, Step500000) {
     ASSERT_EQ(gpu.line_mode, 1);
     ASSERT_EQ(gpu.mode_clocks, 85);
 }
+
+TEST_F(GameboyEmulatorTest, Step1000000) {
+    for (int i = 0; i < 1000000; ++i) {
+        Step();
+    }
+    ASSERT_EQ(cpu.registers.a, 78);
+    ASSERT_EQ(cpu.registers.b, 1);
+    ASSERT_EQ(cpu.registers.c, 12);
+    ASSERT_EQ(cpu.registers.d, 42);
+    ASSERT_EQ(cpu.registers.e, 2);
+    ASSERT_EQ(cpu.registers.f, 80);
+    ASSERT_EQ(cpu.registers.h, 58);
+    ASSERT_EQ(cpu.registers.ime, 1);
+    ASSERT_EQ(cpu.registers.l, 15);
+    ASSERT_EQ(cpu.registers.m, 2);
+    ASSERT_EQ(cpu.registers.pc, 104);
+    ASSERT_EQ(cpu.registers.sp, 65534);
+    ASSERT_EQ(gpu.cur_line, 78);
+    ASSERT_EQ(gpu.cur_scan, 49920);
+    ASSERT_EQ(gpu.line_mode, 0);
+    ASSERT_EQ(gpu.mode_clocks, 26);
+}
+
+TEST_F(GameboyEmulatorTest, Step2000000) {
+    for (int i = 0; i < 2000000; ++i) {
+        Step();
+    }
+    ASSERT_EQ(cpu.registers.a, 100);
+    ASSERT_EQ(cpu.registers.b, 0);
+    ASSERT_EQ(cpu.registers.c, 10);
+    ASSERT_EQ(cpu.registers.d, 15);
+    ASSERT_EQ(cpu.registers.e, 1);
+    ASSERT_EQ(cpu.registers.f, 80);
+    ASSERT_EQ(cpu.registers.h, 117);
+    ASSERT_EQ(cpu.registers.ime, 1);
+    ASSERT_EQ(cpu.registers.l, 15);
+    ASSERT_EQ(cpu.registers.m, 3);
+    ASSERT_EQ(cpu.registers.pc, 100);
+    ASSERT_EQ(cpu.registers.sp, 65534);
+    ASSERT_EQ(gpu.cur_line, 100);
+    ASSERT_EQ(gpu.cur_scan, 64000);
+    ASSERT_EQ(gpu.line_mode, 0);
+    ASSERT_EQ(gpu.mode_clocks, 8);
+}
+
+TEST_F(GameboyEmulatorTest, Step2100000) {
+    for (int i = 0; i < 2100000; ++i) {
+        Step();
+    }
+    ASSERT_EQ(cpu.registers.a, 87);
+    ASSERT_EQ(cpu.registers.b, 0);
+    ASSERT_EQ(cpu.registers.c, 10);
+    ASSERT_EQ(cpu.registers.d, 9);
+    ASSERT_EQ(cpu.registers.e, 1);
+    ASSERT_EQ(cpu.registers.f, 80);
+    ASSERT_EQ(cpu.registers.h, 123);
+    ASSERT_EQ(cpu.registers.ime, 1);
+    ASSERT_EQ(cpu.registers.l, 15);
+    ASSERT_EQ(cpu.registers.m, 3);
+    ASSERT_EQ(cpu.registers.pc, 102);
+    ASSERT_EQ(cpu.registers.sp, 65534);
+    ASSERT_EQ(gpu.cur_line, 87);
+    ASSERT_EQ(gpu.cur_scan, 55680);
+    ASSERT_EQ(gpu.line_mode, 3);
+    ASSERT_EQ(gpu.mode_clocks, 27);
+}
+
+TEST_F(GameboyEmulatorTest, Step2200000) {
+    for (int i = 0; i < 2200000; ++i) {
+        Step();
+    }
+    ASSERT_EQ(cpu.registers.a, 74);
+    ASSERT_EQ(cpu.registers.b, 0);
+    ASSERT_EQ(cpu.registers.c, 10);
+    ASSERT_EQ(cpu.registers.d, 3);
+    ASSERT_EQ(cpu.registers.e, 1);
+    ASSERT_EQ(cpu.registers.f, 80);
+    ASSERT_EQ(cpu.registers.h, 129);
+    ASSERT_EQ(cpu.registers.ime, 1);
+    ASSERT_EQ(cpu.registers.l, 15);
+    ASSERT_EQ(cpu.registers.m, 2);
+    ASSERT_EQ(cpu.registers.pc, 104);
+    ASSERT_EQ(cpu.registers.sp, 65534);
+    ASSERT_EQ(gpu.cur_line, 74);
+    ASSERT_EQ(gpu.cur_scan, 47360);
+    ASSERT_EQ(gpu.line_mode, 3);
+    ASSERT_EQ(gpu.mode_clocks, 0);
+}
+
+TEST_F(GameboyEmulatorTest, Step2300000) {
+    for (int i = 0; i < 2300000; ++i) {
+        Step();
+    }
+    ASSERT_EQ(cpu.registers.a, 239);
+    ASSERT_EQ(cpu.registers.b, 167);
+    ASSERT_EQ(cpu.registers.c, 77);
+    ASSERT_EQ(cpu.registers.d, 0);
+    ASSERT_EQ(cpu.registers.e, 0);
+    ASSERT_EQ(cpu.registers.f, 0);
+    ASSERT_EQ(cpu.registers.h, 2);
+    ASSERT_EQ(cpu.registers.ime, 0);
+    ASSERT_EQ(cpu.registers.l, 198);
+    ASSERT_EQ(cpu.registers.m, 1);
+    ASSERT_EQ(cpu.registers.pc, 1008);
+    ASSERT_EQ(cpu.registers.sp, 65451);
+    ASSERT_EQ(gpu.cur_line, 78);
+    ASSERT_EQ(gpu.cur_scan, 49920);
+    ASSERT_EQ(gpu.line_mode, 3);
+    ASSERT_EQ(gpu.mode_clocks, 5);
+}
+
+TEST_F(GameboyEmulatorTest, Step3000000) {
+    for (int i = 0; i < 3000000; ++i) {
+        Step();
+    }
+    ASSERT_EQ(cpu.registers.a, 246);
+    ASSERT_EQ(cpu.registers.b, 80);
+    ASSERT_EQ(cpu.registers.c, 182);
+    ASSERT_EQ(cpu.registers.d, 0);
+    ASSERT_EQ(cpu.registers.e, 0);
+    ASSERT_EQ(cpu.registers.f, 0);
+    ASSERT_EQ(cpu.registers.h, 2);
+    ASSERT_EQ(cpu.registers.ime, 0);
+    ASSERT_EQ(cpu.registers.l, 198);
+    ASSERT_EQ(cpu.registers.m, 3);
+    ASSERT_EQ(cpu.registers.pc, 1007);
+    ASSERT_EQ(cpu.registers.sp, 65451);
+    ASSERT_EQ(gpu.cur_line, 51);
+    ASSERT_EQ(gpu.cur_scan, 32640);
+    ASSERT_EQ(gpu.line_mode, 0);
+    ASSERT_EQ(gpu.mode_clocks, 9);
+}
