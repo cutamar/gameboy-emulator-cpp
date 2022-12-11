@@ -2172,7 +2172,7 @@ void CPU::ADDr_b()
 {
     auto a = registers.a;
     registers.a += registers.b;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2184,7 +2184,7 @@ void CPU::ADDr_c()
 {
     auto a = registers.a;
     registers.a += registers.c;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2196,7 +2196,7 @@ void CPU::ADDr_d()
 {
     auto a = registers.a;
     registers.a += registers.d;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2208,7 +2208,7 @@ void CPU::ADDr_e()
 {
     auto a = registers.a;
     registers.a += registers.e;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2220,7 +2220,7 @@ void CPU::ADDr_h()
 {
     auto a = registers.a;
     registers.a += registers.h;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2232,7 +2232,7 @@ void CPU::ADDr_l()
 {
     auto a = registers.a;
     registers.a += registers.l;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2244,7 +2244,7 @@ void CPU::ADDr_a()
 {
     auto a = registers.a;
     registers.a += registers.a;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2257,7 +2257,7 @@ void CPU::ADDHL()
     auto a = registers.a;
     auto m = mmu->ReadByte((registers.h << 8) + registers.l);
     registers.a += m;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2271,7 +2271,7 @@ void CPU::ADDn()
     auto m = mmu->ReadByte(registers.pc);
     registers.a += m;
     registers.pc++;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2342,7 +2342,7 @@ void CPU::ADCr_b()
     auto a = registers.a;
     registers.a += registers.b;
     registers.a += (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2355,7 +2355,7 @@ void CPU::ADCr_c()
     auto a = registers.a;
     registers.a += registers.c;
     registers.a += (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2368,7 +2368,7 @@ void CPU::ADCr_d()
     auto a = registers.a;
     registers.a += registers.d;
     registers.a += (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2381,7 +2381,7 @@ void CPU::ADCr_e()
     auto a = registers.a;
     registers.a += registers.e;
     registers.a += (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2394,7 +2394,7 @@ void CPU::ADCr_h()
     auto a = registers.a;
     registers.a += registers.h;
     registers.a += (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2407,7 +2407,7 @@ void CPU::ADCr_l()
     auto a = registers.a;
     registers.a += registers.l;
     registers.a += (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2420,7 +2420,7 @@ void CPU::ADCr_a()
     auto a = registers.a;
     registers.a += registers.a;
     registers.a += (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2434,7 +2434,7 @@ void CPU::ADCHL()
     auto m = mmu->ReadByte((registers.h << 8) + registers.l);
     registers.a += m;
     registers.a += (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2449,7 +2449,7 @@ void CPU::ADCn()
     registers.a += m;
     registers.pc++;
     registers.a += (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a > 255) ? 0x10 : 0;
+    registers.f = (registers.a < a) ? 0x10 : 0;;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2462,7 +2462,7 @@ void CPU::SUBr_b()
 {
     auto a = registers.a;
     registers.a -= registers.b;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2474,7 +2474,7 @@ void CPU::SUBr_c()
 {
     auto a = registers.a;
     registers.a -= registers.c;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2486,7 +2486,7 @@ void CPU::SUBr_d()
 {
     auto a = registers.a;
     registers.a -= registers.d;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2498,7 +2498,7 @@ void CPU::SUBr_e()
 {
     auto a = registers.a;
     registers.a -= registers.e;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2510,7 +2510,7 @@ void CPU::SUBr_h()
 {
     auto a = registers.a;
     registers.a -= registers.h;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2522,7 +2522,7 @@ void CPU::SUBr_l()
 {
     auto a = registers.a;
     registers.a -= registers.l;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2534,7 +2534,7 @@ void CPU::SUBr_a()
 {
     auto a = registers.a;
     registers.a -= registers.a;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2547,7 +2547,7 @@ void CPU::SUBHL()
     auto a = registers.a;
     auto m = mmu->ReadByte((registers.h << 8) + registers.l);
     registers.a -= m;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2561,7 +2561,7 @@ void CPU::SUBn()
     auto m = mmu->ReadByte(registers.pc);
     registers.a -= m;
     registers.pc++;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2575,7 +2575,7 @@ void CPU::SBCr_b()
     auto a = registers.a;
     registers.a -= registers.b;
     registers.a -= (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2588,7 +2588,7 @@ void CPU::SBCr_c()
     auto a = registers.a;
     registers.a -= registers.c;
     registers.a -= (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2601,7 +2601,7 @@ void CPU::SBCr_d()
     auto a = registers.a;
     registers.a -= registers.d;
     registers.a -= (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2614,7 +2614,7 @@ void CPU::SBCr_e()
     auto a = registers.a;
     registers.a -= registers.e;
     registers.a -= (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2627,7 +2627,7 @@ void CPU::SBCr_h()
     auto a = registers.a;
     registers.a -= registers.h;
     registers.a -= (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2640,7 +2640,7 @@ void CPU::SBCr_l()
     auto a = registers.a;
     registers.a -= registers.l;
     registers.a -= (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2653,7 +2653,7 @@ void CPU::SBCr_a()
     auto a = registers.a;
     registers.a -= registers.a;
     registers.a -= (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2667,7 +2667,7 @@ void CPU::SBCHL()
     auto m = mmu->ReadByte((registers.h << 8) + registers.l);
     registers.a -= m;
     registers.a -= (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -2682,7 +2682,7 @@ void CPU::SBCn()
     registers.a -= m;
     registers.pc++;
     registers.a -= (registers.f & 0x10) ? 1 : 0;
-    registers.f = (registers.a < 0) ? 0x50 : 0x40;
+    registers.f = (a < registers.a) ? 0x50 : 0x40;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
@@ -4939,8 +4939,8 @@ void CPU::CPL()
 }
 void CPU::NEG()
 {
+    registers.f = (registers.a == 0) ? 0 : 0x10;
     registers.a = 0 - registers.a;
-    registers.f = (registers.a < 0) ? 0x10 : 0;
     registers.a &= 255;
     if (!registers.a)
         registers.f |= 0x80;
