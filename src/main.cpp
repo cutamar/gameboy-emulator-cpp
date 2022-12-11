@@ -13,11 +13,13 @@ int main() {
     GPU gpu{};
     MMU mmu{cpu, gpu};
     Timer timer{cpu, mmu};
+    Key key{};
     cpu.SetMMU(mmu);
     gpu.SetCPU(cpu);
     gpu.SetMMU(mmu);
     gpu.SetRenderer(renderer);
     mmu.Load("../roms/ttt.gb");
+    mmu.SetKey(key);
     while (true) {
         auto start = std::chrono::system_clock::now();
         if (cpu.halt) {

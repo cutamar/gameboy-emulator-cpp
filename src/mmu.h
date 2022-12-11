@@ -7,6 +7,7 @@
 #include "cpu.h"
 #include "gpu.h"
 #include "timer.h"
+#include "key.h"
 
 class GPU;
 class Timer;
@@ -17,6 +18,7 @@ class MMU {
         uint8_t ReadByte(uint16_t address);
         uint16_t ReadWord(uint16_t address);
         void SetTimer(Timer& timer);
+        void SetKey(Key& key);
         void WriteByte(uint16_t address, uint8_t data);
         void WriteWord(uint16_t address, uint16_t data);
         void Load(std::string path);
@@ -27,6 +29,7 @@ class MMU {
         const CPU& cpu;
         GPU& gpu;
         Timer* timer;
+        Key* key;
         bool in_bios;
         uint8_t bios[256] = {
             0x31, 0xFE, 0xFF, 0xAF, 0x21, 0xFF, 0x9F, 0x32, 0xCB, 0x7C, 0x20, 0xFB, 0x21, 0x26, 0xFF, 0x0E,

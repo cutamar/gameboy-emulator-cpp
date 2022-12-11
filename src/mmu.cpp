@@ -28,6 +28,10 @@ void MMU::SetTimer(Timer& timer) {
     this->timer = &timer;
 }
 
+void MMU::SetKey(Key& key) {
+    this->key = &key;
+}
+
 uint8_t MMU::ReadByte(uint16_t address) {
     switch (address & 0xF000) {
         case 0x0000:
@@ -92,7 +96,7 @@ uint8_t MMU::ReadByte(uint16_t address) {
                                 switch (address & 0xF) {
                                     case 0:
                                         // TODO return KEY.rb();    // JOYP
-                                        return 0;
+                                        return key->ReadByte();
                                     case 4:
                                     case 5:
                                     case 6:
@@ -206,6 +210,7 @@ void MMU::WriteByte(uint16_t address, uint8_t data) {
                                 switch (address & 0xF) {
                                     case 0x0:
                                         // TODO KEY.wb(val);
+                                        key->WriteByte(data);
                                         break;
                                     case 0x4:
                                     case 0x5:
