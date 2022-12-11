@@ -28,31 +28,31 @@ void Key::WriteByte(uint8_t data) {
     colid_x = data & 0x30;
 }
 
-void Key::KeyDown() {
-    switch (0x00)
+void Key::KeyDown(SDL_Event& event) {
+    switch (event.key.keysym.scancode)
     {
-    case 39:
+    case SDL_SCANCODE_RIGHT:
         key_2 &= 0xE;
         break;
-    case 37:
+    case SDL_SCANCODE_LEFT:
         key_2 &= 0xD;
         break;
-    case 38:
+    case SDL_SCANCODE_UP:
         key_2 &= 0xB;
         break;
-    case 40:
+    case SDL_SCANCODE_DOWN:
         key_2 &= 0x7;
         break;
-    case 90:
+    case SDL_SCANCODE_Q:
         key_1 &= 0xE;
         break;
-    case 88:
+    case SDL_SCANCODE_W:
         key_1 &= 0xD;
         break;
-    case 32:
+    case SDL_SCANCODE_SPACE:
         key_1 &= 0xB;
         break;
-    case 13:
+    case SDL_SCANCODE_RETURN:
         key_1 &= 0x7;
         break;
     
@@ -61,31 +61,31 @@ void Key::KeyDown() {
     }
 }
 
-void Key::KeyUp() {
-    switch (0x00)
+void Key::KeyUp(SDL_Event& event) {
+    switch (event.key.keysym.scancode)
     {
-    case 39:
+    case SDL_SCANCODE_RIGHT:
         key_2 &= 0x1;
         break;
-    case 37:
+    case SDL_SCANCODE_LEFT:
         key_2 &= 0x2;
         break;
-    case 38:
+    case SDL_SCANCODE_UP:
         key_2 &= 0x4;
         break;
-    case 40:
+    case SDL_SCANCODE_DOWN:
         key_2 &= 0x8;
         break;
-    case 90:
+    case SDL_SCANCODE_Q:
         key_1 &= 0x1;
         break;
-    case 88:
+    case SDL_SCANCODE_W:
         key_1 &= 0x2;
         break;
-    case 32:
+    case SDL_SCANCODE_SPACE:
         key_1 &= 0x4;
         break;
-    case 13:
+    case SDL_SCANCODE_RETURN:
         key_1 &= 0x8;
         break;
     

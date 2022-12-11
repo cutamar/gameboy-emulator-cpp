@@ -20,8 +20,16 @@ int main() {
     gpu.SetRenderer(renderer);
     mmu.Load("../roms/ttt.gb");
     mmu.SetKey(key);
+    SDL_Event event;
     while (true) {
         auto start = std::chrono::system_clock::now();
+        if (SDL_PollEvent(&event)) {
+            if (SDL_KEYDOWN == event.type) {
+                key.KeyDown(event);
+            } else if (SDL_KEYUP == event.type) {
+                key.KeyUp(event);
+            }
+        }
         if (cpu.halt) {
             cpu.registers.m = 1;
         } else {
