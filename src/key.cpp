@@ -83,7 +83,7 @@ void Key::KeyUp(SDL_Event& event) {
         key_1 &= 0x2;
         break;
     case SDL_SCANCODE_SPACE:
-        key_1 &= 0x4;
+        key_1 &= 0x5;
         break;
     case SDL_SCANCODE_RETURN:
         key_1 &= 0x8;
