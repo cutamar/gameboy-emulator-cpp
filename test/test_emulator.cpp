@@ -3156,6 +3156,30 @@ TEST_F(GameboyEmulatorTest, Step3000000)
     ASSERT_EQ(gpu.mode_clocks, 9);
 }
 
+TEST_F(GameboyEmulatorTest, Step3000001)
+{
+    for (int i = 0; i < 3000001; ++i)
+    {
+        Step();
+    }
+    ASSERT_EQ(cpu.registers.a, 246);
+    ASSERT_EQ(cpu.registers.b, 80);
+    ASSERT_EQ(cpu.registers.c, 181);
+    ASSERT_EQ(cpu.registers.d, 0);
+    ASSERT_EQ(cpu.registers.e, 0);
+    ASSERT_EQ(cpu.registers.f, 0);
+    ASSERT_EQ(cpu.registers.h, 2);
+    ASSERT_EQ(cpu.registers.ime, 0);
+    ASSERT_EQ(cpu.registers.l, 198);
+    ASSERT_EQ(cpu.registers.m, 1);
+    ASSERT_EQ(cpu.registers.pc, 1008);
+    ASSERT_EQ(cpu.registers.sp, 65451);
+    ASSERT_EQ(gpu.cur_line, 51);
+    ASSERT_EQ(gpu.cur_scan, 32640);
+    ASSERT_EQ(gpu.line_mode, 0);
+    ASSERT_EQ(gpu.mode_clocks, 10);
+}
+
 TEST_F(GameboyEmulatorTest, Step6000000)
 {
     for (int i = 0; i < 6000000; ++i)
