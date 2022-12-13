@@ -14,6 +14,7 @@ include_directories(${SDL2_INCLUDE_DIRS} src)
 
 file(GLOB SOURCES "src/*.cpp")
 
+string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 add_executable(GameboyEmulator ${SOURCES})
 target_link_libraries(GameboyEmulator ${SDL2_LIBRARIES})
 
