@@ -26,6 +26,8 @@ This Capstone project is implementing a gameboy emulator. In the `roms` folder y
 
 ## Running Tests
 
+To un the tests, first uncomment the test cmake lines in the CMakeLists.txt file. They were commented out, because the Udacity Workspace uses an older version of cmake.
+
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
